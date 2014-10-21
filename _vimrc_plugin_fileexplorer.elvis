@@ -1,0 +1,11 @@
+
+""""""""""""""""""""""""""""""
+" => File explorer
+""""""""""""""""""""""""""""""
+"Split vertically
+let g:explVertical=1
+let g:explWinSize=35 "Window size
+let g:explSplitLeft=1
+let g:explSplitBelow=1
+let g:explHideFiles='^.,.*.class$,.*.swp$,.*.pyc$,.*.swo$,.DS_Store$' "Hide some file
+let g:explDetailedHelp=0 "Hide the help thing..

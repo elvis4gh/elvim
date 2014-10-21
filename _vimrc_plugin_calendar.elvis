@@ -1,0 +1,9 @@
+
+""""""""""""""""""""""""""""""
+" =>  Calendar
+""""""""""""""""""""""""""""""
+"let g:calendar_diary=<PATH>
+let g:calendar_focus_today = 1
+let g:calendar_weeknm = 1 " WK01
+"map <F12>   :Calendar<cr>
+"imap <C-F12>   <C-R>=strftime("<!-- Y%YM%mD%d %X -->")<CR>

@@ -1,0 +1,167 @@
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => General
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set nocompatible "Get out of VI's compatible mode..
+
+
+
+" Font
+"set encoding=cp936
+set encoding=utf-8
+
+set termencoding=utf-8
+
+"set fileencoding=chinese
+set fileencoding=utf-8
+
+set fileencodings=ucs-bom,utf-8,chinese,cp936
+
+set langmenu=zh_CN,utf-8
+
+"Use Windows convension keys (C-c,C-x, etc)
+source $VIMRUNTIME/mswin.vim
+:behave mswin
+
+"OS value. return win32 linux or mac
+function! MySys()
+    return "windows"
+    "return "linux"
+    "return "mac"
+endfunction
+
+
+set history=100 "Sets how many lines of history VIM har to remember
+set viminfo='20,<50,s10,h
+set autoread "Set to auto read when a file is changed from the outside
+
+set mouse=a "Have the mouse enabled all the time:
+
+"Set mapleader 自定义快捷键的开头
+let mapleader = ","
+let g:mapleader = ","
+
+set mousemodel=popup " Use extend mouse mode to search word using SHIFT+left-mouse
+
+noremap <silent> <leader>h :h <C-r><C-w><cr>
+
+"""""""""""""""""""""""""""
+"   feature
+"   debug:
+"""""""""""""""""""""""""""
+source $VIM\_vimrc_quickinput.elvis
+source $VIM\_vimrc_feature_fold.elvis
+source $VIM\_vimrc_quickfixmode.elvis
+
+"""""""""""""""""""""""""""
+"   key map :
+"""""""""""""""""""""""""""
+source $VIM\_vimrc_keymap.elvis
+
+"""""""""""""""""""""""""""
+"   quick input 
+"""""""""""""""""""""""""""
+source $VIM\_vimrc_abbreviate.elvis
+
+"""""""""""""""""""""""""""
+"   Plugin   "{{{
+"""""""""""""""""""""""""""
+"  c.vim
+"  neocomplcache
+"  sippet
+"  supertab "  使Tab快捷键具有更快捷的上下文提示功能
+"
+source $VIM\_vimrc_plugin_taglist.elvis
+source $VIM\_vimrc_plugin_omnicppcoplete.elvis
+source $VIM\_vimrc_plugin_project.elvis
+source $VIM\_vimrc_plugin_vimwiki.elvis
+source $VIM\_vimrc_plugin_ctags.elvis
+
+source $VIM\_vimrc_plugin_winManager.elvis
+source $VIM\_vimrc_plugin_SourceExplorer.elvis
+source $VIM\_vimrc_plugin_fileexplorer.elvis
+source $VIM\_vimrc_plugin_minibuffer.elvis
+source $VIM\_vimrc_plugin_calendar.elvis
+""""""""""""""""""""""""""""""
+" => Minibuffer
+""""""""""""""""""""""""""""""
+let g:miniBufExplModSelTarget = 1
+let g:miniBufExplorerMoreThanOne = 0
+let g:miniBufExplModSelTarget = 0
+let g:miniBufExplUseSingleClick = 1
+let g:miniBufExplMapWindowNavVim = 1
+let g:miniBufExplVSplit = 25
+let g:miniBufExplSplitBelow=1
+"}}}
+"
+
+
+"Omni-cppcomplete plugin
+set nocp   "ä¸å¼å®¹vi
+filetype plugin on   "å¼å¯æä»¶ç±»åè¯å«åè½
+
+
+"source $VIM\_vimrc_feature_vimgrep.elvis
+"vimgrep 
+nnoremap <silent> <leader># :vimgrep/<C-R><C-W>/**<CR>
+
+
+" tab window's toggle - pending
+"window tab
+"map <C-J> <C-W>j<C-W>_
+"map <C-K> <C-W>k<C-W>_
+
+" This command will execute the file, for example, if this is an
+" HTML file, it will run:
+"     start c:\absolute\filename.html
+nnoremap <silent> <C-F6> :let old_reg=@"<CR>:let @"=substitute(expand("%:p"), "/", "\\", "g")<CR>:silent!!cmd /cstart <C-R><C-R>"<CR><CR>:let @"=old_reg<CR>
+
+"command Preview :!firefox %<CR>
+"
+
+"Elvis
+nnoremap <silent> <A-,> <C-o>
+nnoremap <silent> <A-.> <C-i>
+"""""""""""""""""""""""""""end  " Source Explorer plugin
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""gVim GUI""""""""""""""""""
+
+" file tab's switch  refer to c:\Program Files\Vim\_vimrc_keymap.elvis
+
+"""""""""""""""""""""""""""end gVim GUI"""""""""""""
+set tags=c:\Users\eknoqry\code\ecngzlx005\eknoqry_eegs20_a12_bypass\rcp\tags
+
+"""""""""""""""""""""""""""gVim  session 
+au VimLeave * mksession!  c:\Users\eknoqry\Documents\MyWiki\mywiki.session 
+au VimLeave * wviminfo! c:\Users\eknoqry\Documents\MyWiki\mywiki.viminfo 
+
+source c:\Users\eknoqry\Documents\MyWiki\mywiki.session 
+rviminfo c:\Users\eknoqry\Documents\MyWiki\mywiki.viminfo 
+"""""""""""""""""""""""""""end gVim session"""""""""""""
+
+" hex editing 
+":%!xxd
+" vim -b : edit binary using xxd-format!
+	augroup Binary
+	  au!
+	  au BufReadPre  *.bin let &bin=1
+	  au BufReadPost *.bin if &bin | %!xxd
+	  au BufReadPost *.bin set ft=xxd | endif
+	  au BufWritePre *.bin if &bin | %!xxd -r
+	  au BufWritePre *.bin endif
+	  au BufWritePost *.bin if &bin | %!xxd
+	  au BufWritePost *.bin set nomod | endif
+	augroup END
+
+
+"font 
+"set guifont=Bitstream_Vera_Sans_Mono:h10:cANSI
+
+" increment
+let g:I=0
+function! INC(increment)
+  let g:I =g:I + a:increment
+  return g:I
+endfunction
+

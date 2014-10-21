@@ -1,0 +1,3 @@
+"Quick input  printf debug message
+"
+nnoremap <silent> <M-p> A<CR>printf("<C-R>" = %d. ------------Elvis-------------[%s, %s, line %d]\n", <C-R>", __FILE__, __FUNCTION__, __LINE__); fflush(NULL);

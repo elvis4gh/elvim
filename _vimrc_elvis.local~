@@ -1,0 +1,179 @@
+source $VIM\_vimrc_abbreviate.elvis
+source $VIM\_vimrc_quickinput.elvis
+source $VIM\_vimrc_keymap.elvis
+
+
+" hex editing 
+":%!xxd
+" vim -b : edit binary using xxd-format!
+	augroup Binary
+	  au!
+	  au BufReadPre  *.bin let &bin=1
+	  au BufReadPost *.bin if &bin | %!xxd
+	  au BufReadPost *.bin set ft=xxd | endif
+	  au BufWritePre *.bin if &bin | %!xxd -r
+	  au BufWritePre *.bin endif
+	  au BufWritePost *.bin if &bin | %!xxd
+	  au BufWritePost *.bin set nomod | endif
+	augroup END
+
+"""""""""""""Plugin""""""""""""""
+source $VIM\_vimrc_plugin_project.elvis
+source $VIM\_vimrc_plugin_vimwiki.elvis
+
+"tab operation
+":make command default setting
+"set makeprg=c:\Dev-Cpp\bin\gcc.exe\ -Wall\ debug.c 
+
+"use make command to compile current buffer file
+"set makeprg=c:\Dev-Cpp\bin\gcc.exe\ -Wall\ %:p
+
+autocmd FileType c,cpp  map <buffer> <leader><space> :w<CR>:make<CR>
+nmap <leader>cn :cn<cr>
+nmap <leader>cp :cp<cr>
+nmap <leader>cw :cw 10<cr> 
+
+"bind F2 to 'set number!' which toggles on/off.
+
+"set nowrap
+"nmap <leader>image yy:!c:\Users\eknoqry\software\IrfanViewPortable\IrfanViewPortable.exe ""p<CR> 
+nmap <leader>image yy:!rundll32.exe C:\WINDOWS\system32\shimgvw.dll,ImageView_Fullscreen ""p<CR>
+
+
+
+" taglist Plugin
+let Tlist_Ctags_Cmd='ctags.exe'
+let Tlist_Use_Right_Window = 1 
+let Tlist_Display_Prototype = 1
+let Tlist_File_Fold_Auto_Close=1 " 当前不被编辑的文件的方法列表自动折叠起来， 这样可以节约一些屏幕空间
+let Tlist_Show_One_File=1
+let Tlist_OnlyWindow=1
+let Tlist_Sort_Type='name'
+let Tlist_Exit_OnlyWindow=1
+let Tlist_Show_Menu=1
+let Tlist_Max_Submenu_Items=10
+let Tlist_Max_Tag_length=38
+let Tlist_Use_SingleClick=0
+let Tlist_Auto_Open=0
+let Tlist_Close_On_Select=0
+let Tlist_GainFocus_On_ToggleOpen=0
+let Tlist_Process_File_Always=1
+let Tlist_WinHeight=10
+let Tlist_WinWidth=20
+let Tlist_Use_Horiz_Window=0
+" 这样就可以用 ,tl 命令进行taglist窗口的打开和关闭之间方便切换了.
+nmap <silent> <leader>tl :TlistToggle<CR> 
+
+"ctags 
+"set c:\Users\eknoqry\code\genesisDrop1_20110818image\tag
+set tags=tags;    "; 不能没有
+set autochdir
+
+"win manager plugin
+let g:winManagerWindowLayout='FileExplorer|BufExplorer'  "这里可以设置为多个窗口, 如'FileExplorer|BufExplorer|TagList'
+let g:persistentBehaviour=0             "只剩一个窗口时, 退出vim.
+let g:winManagerWidth=20
+let g:defaultExplorer=1
+nmap <silent> <leader>few :FirstExplorerWindow<cr>
+nmap <silent> <leader>bew :BottomExplorerWindow<cr>
+nmap <silent> <leader>wm :WMToggle<cr>
+
+"Omni-cppcomplete plugin
+set nocp   "不兼容vi
+filetype plugin on   "开启文件类型识别功能
+
+
+" fold feature
+
+set fdm=manual
+"set fdm=indent
+"set fdm=marker
+"set fdm=syntax
+
+
+" tab window's toggle - pending
+"window tab
+"map <C-J> <C-W>j<C-W>_
+"map <C-K> <C-W>k<C-W>_
+"nmap <silent> <F3> :command<CR>
+
+" This command will execute the file, for example, if this is an
+" HTML file, it will run:
+"     start c:\absolute\filename.html
+nnoremap <silent> <C-F6> :let old_reg=@"<CR>:let @"=substitute(expand("%:p"), "/", "\\", "g")<CR>:silent!!cmd /cstart <C-R><C-R>"<CR><CR>:let @"=old_reg<CR>
+
+"command Preview :!firefox %<CR>
+"
+
+
+
+
+
+
+"vimgrep 
+nnoremap <silent> <leader># :vimgrep/<C-R><C-W>/**<CR>
+nnoremap <silent> <leader>n :cnext<CR>
+nnoremap <silent> <leader>N :cprevious<CR>
+
+" fdm
+nnoremap <silent> <leader>f :set fdm=indent<CR>
+nnoremap <silent> <leader>F :set fdm=manual<CR>
+
+
+"""""""""""""""""""""""""""" Source Explorer plugin
+
+" // The switch of the Source Explorer
+nmap <F8> :SrcExplToggle<CR>
+
+" // Set the height of Source Explorer window
+let g:SrcExpl_winHeight = 20 
+" // Set 100 ms for refreshing the Source Explorer
+let g:SrcExpl_refreshTime = 100
+
+" // Set "Enter" key to jump into the exact definition context
+"let g:SrcExpl_jumpKey = "<ENTER>"
+
+" // Set "Space" key for back from the definition context
+let g:SrcExpl_gobackKey = "<SPACE>"
+
+" // In order to Avoid conflicts, the Source Explorer should know what plugins
+" // are using buffers. And you need add their bufname into the list below
+" // according to the command ":buffers!"
+let g:SrcExpl_pluginList = [
+        \ "__Tag_List__",
+        \ "Source_Explorer"
+    \ ]
+        "\ "_NERD_tree_",
+
+" // Enable/Disable the local definition searching, and note that this is not
+" // guaranteed to work, the Source Explorer doesn't check the syntax for now.
+" // It only searches for a match with the keyword according to command 'gd'
+let g:SrcExpl_searchLocalDef = 1
+
+" // Do not let the Source Explorer update the tags file when opening
+let g:SrcExpl_isUpdateTags = 0
+
+" // Use 'Exuberant Ctags' with '--sort=foldcase -R .' or '-L cscope.files' to
+" //  create/update a tags file
+let g:SrcExpl_updateTagsCmd = "ctags --sort=foldcase -R ."
+
+" // Set "<F12>" key for updating the tags file artificially
+let g:SrcExpl_updateTagsKey = "<F12>" 
+"Elvis
+nnoremap <silent> <A-,> <C-o>
+nnoremap <silent> <A-.> <C-i>
+"""""""""""""""""""""""""""end  " Source Explorer plugin
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""gVim GUI""""""""""""""""""
+
+" file tab's switch  refer to c:\Program Files\Vim\_vimrc_keymap.elvis
+
+"""""""""""""""""""""""""""end gVim GUI"""""""""""""
+set tags=c:\Users\eknoqry\code\ecngzlx005\eknoqry_eegs20_a12_bypass\rcp\tags
+
+"""""""""""""""""""""""""""gVim  session 
+au VimLeave * mksession!  c:\Users\eknoqry\Documents\MyWiki\mywiki.session 
+au VimLeave * wviminfo! c:\Users\eknoqry\Documents\MyWiki\mywiki.viminfo 
+"""""""""""""""""""""""""""end gVim session"""""""""""""

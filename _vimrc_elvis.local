@@ -1,0 +1,261 @@
+set nocompatible                " be iMproved
+set nocompatible                "Get out of VI's compatible mode..
+filetype off                    " required!
+filetype plugin indent on
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""'
+" vundle
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""'
+"Vundle的路径 
+"set rtp+=~/.vim/bundle/vundle/
+set rtp+=$VIM/vimfiles/bundle/Vundle.vim "插件的安装路径 
+call vundle#begin('$VIM/vimfiles/bundle/') 
+Plugin 'gmarik/Vundle.vim' 
+Plugin 'L9'
+call vundle#end()
+
+
+"此处规定插件的安装路径
+"call vundle#rc('$VIM/vimfiles/bundle/')
+"Bundle 'YankRing.vim'
+"Bundle 'vcscommand.vim'
+"Bundle 'ShowPairs'
+"Bundle 'SudoEdit.vim'
+"Bundle 'EasyGrep'
+"Bundle 'VOoM'
+"Bundle 'VimIM'
+"..................................
+" non github repos
+" Bundle 'git://git.wincent.com/command-t.git'
+"......................................
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => General
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+" Font
+"set encoding=cp936
+set encoding=utf-8
+
+set termencoding=utf-8
+
+"set fileencoding=chinese
+set fileencoding=utf-8
+
+set fileencodings=ucs-bom,utf-8,chinese,cp936
+
+set langmenu=zh_CN,utf-8
+
+"Use Windows convension keys (C-c,C-x, etc)
+source $VIMRUNTIME/mswin.vim
+:behave mswin
+
+"OS value. return win32 linux or mac
+function! MySys()
+    return "windows"
+    "return "linux"
+    "return "mac"
+endfunction
+
+
+set history=100 "Sets how many lines of history VIM har to remember
+set viminfo='20,<50,s10,h
+set autoread "Set to auto read when a file is changed from the outside
+
+set mouse=a "Have the mouse enabled all the time:
+
+"Set mapleader 自定义快捷键的开头
+let mapleader = ","
+let g:mapleader = ","
+
+set mousemodel=popup " Use extend mouse mode to search word using SHIFT+left-mouse
+
+noremap <silent> <leader>h :h <C-r><C-w><cr>
+
+"""""""""""""""""""""""""""
+"   feature
+"   debug:
+"""""""""""""""""""""""""""
+source $VIM\_vimrc_quickinput.elvis
+source $VIM\_vimrc_feature_fold.elvis
+source $VIM\_vimrc_quickfixmode.elvis
+
+"""""""""""""""""""""""""""
+"   key map :
+"""""""""""""""""""""""""""
+source $VIM\_vimrc_keymap.elvis
+
+"""""""""""""""""""""""""""
+"   quick input 
+"""""""""""""""""""""""""""
+source $VIM\_vimrc_abbreviate.elvis
+
+"""""""""""""""""""""""""""
+"   Plugin   "{{{
+"""""""""""""""""""""""""""
+"  c.vim
+"  neocomplcache
+"  sippet
+"  supertab "  使Tab快捷键具有更快捷的上下文提示功能
+"
+source $VIM\_vimrc_plugin_taglist.elvis
+source $VIM\_vimrc_plugin_omnicppcoplete.elvis
+source $VIM\_vimrc_plugin_project.elvis
+source $VIM\_vimrc_plugin_vimwiki.elvis
+source $VIM\_vimrc_plugin_ctags.elvis
+
+source $VIM\_vimrc_plugin_winManager.elvis
+source $VIM\_vimrc_plugin_SourceExplorer.elvis
+source $VIM\_vimrc_plugin_fileexplorer.elvis
+source $VIM\_vimrc_plugin_minibuffer.elvis
+source $VIM\_vimrc_plugin_calendar.elvis
+""""""""""""""""""""""""""""""
+" => Minibuffer
+""""""""""""""""""""""""""""""
+let g:miniBufExplModSelTarget = 1
+let g:miniBufExplorerMoreThanOne = 0
+let g:miniBufExplModSelTarget = 0
+let g:miniBufExplUseSingleClick = 1
+let g:miniBufExplMapWindowNavVim = 1
+let g:miniBufExplVSplit = 25
+let g:miniBufExplSplitBelow=1
+"}}}
+"
+
+
+"Omni-cppcomplete plugin
+set nocp   "ä¸å¼å®¹vi
+filetype plugin on   "å¼å¯æä»¶ç±»åè¯å«åè½
+
+
+"source $VIM\_vimrc_feature_vimgrep.elvis
+"vimgrep 
+nnoremap <silent> <leader># :vimgrep/<C-R><C-W>/**<CR>
+
+
+" tab window's toggle - pending
+"window tab
+"map <C-J> <C-W>j<C-W>_
+"map <C-K> <C-W>k<C-W>_
+
+" This command will execute the file, for example, if this is an
+" HTML file, it will run:
+"     start c:\absolute\filename.html
+nnoremap <silent> <C-F6> :let old_reg=@"<CR>:let @"=substitute(expand("%:p"), "/", "\\", "g")<CR>:silent!!cmd /cstart <C-R><C-R>"<CR><CR>:let @"=old_reg<CR>
+
+"command Preview :!firefox %<CR>
+"
+
+"Elvis
+nnoremap <silent> <A-,> <C-o>
+nnoremap <silent> <A-.> <C-i>
+"""""""""""""""""""""""""""end  " Source Explorer plugin
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""gVim GUI""""""""""""""""""
+
+" file tab's switch  refer to c:\Program Files\Vim\_vimrc_keymap.elvis
+
+"""""""""""""""""""""""""""end gVim GUI"""""""""""""
+"set tags=c:\Users\eknoqry\code\ecngzlx005\eknoqry_eegs20_a12_bypass\rcp\tags
+set tags=c:\Users\eknoqry\code\vobs\ne_apps\tags
+
+"""""""""""""""""""""""""""gVim  session 
+"au VimLeave * mksession!  c:\Users\eknoqry\Documents\MyWiki\mywiki.session 
+"au VimLeave * wviminfo! c:\Users\eknoqry\Documents\MyWiki\mywiki.viminfo 
+
+" some problem!!!:
+"source c:\Users\eknoqry\Documents\MyWiki\mywiki.session 
+"rviminfo c:\Users\eknoqry\Documents\MyWiki\mywiki.viminfo 
+"""""""""""""""""""""""""""end gVim session"""""""""""""
+
+" hex editing 
+":%!xxd
+" vim -b : edit binary using xxd-format!
+	augroup Binary
+	  au!
+	  au BufReadPre  *.bin let &bin=1
+	  au BufReadPost *.bin if &bin | %!xxd
+	  au BufReadPost *.bin set ft=xxd | endif
+	  au BufWritePre *.bin if &bin | %!xxd -r
+	  au BufWritePre *.bin endif
+	  au BufWritePost *.bin if &bin | %!xxd
+	  au BufWritePost *.bin set nomod | endif
+	augroup END
+
+
+"font 
+"set guifont=Bitstream_Vera_Sans_Mono:h10:cANSI
+
+" increment
+let g:I=0
+function! INC(increment)
+  let g:I =g:I + a:increment
+  return g:I
+endfunction
+
+
+
+""""""""""""""""""""""""
+"""   setup the gvim with GCC """""""
+""定义CompileRun函数，用来调用编译和运行  
+"func CompileRun()  
+"exec "w"  
+  "
+"if &filetype == 'c'  
+"exec "!gcc -Wall -enable-auto-import % -g -o %<.exe"  
+  "
+"if &filetype == 'cpp'  
+"exec "!g++ -Wall -enable-auto-import % -g -o %<.exe"  
+  "
+"elseif &filetype == 'java'  
+"exec "!javac %"  
+"endif  
+"endfunc  
+""结束定义ComplieRun  
+  "
+""定义Run函数  
+"func Run()  
+"if &filetype == 'c' || &filetype == 'cpp'  
+"exec "!%<.exe"  
+"elseif &filetype == 'java'  
+"exec "!java %<"  
+"endif  
+"endfunc  
+  "
+""定义Debug函数，用来调试程序  
+"func Debug()  
+"exec "w"  
+  "
+"if &filetype == 'c'  
+"exec "!gcc % -g -o %<.exe"  
+"exec "!gdb %<.exe"  
+"elseif &filetype == 'cpp'  
+"exec "!g++ % -g -o %<.exe"  
+"exec "!gdb %<.exe"  
+"elseif &filetype == 'java'  
+"exec "!javac %"  
+"exec "!jdb %<"  
+"endif  
+"endfunc  
+  "
+""设置程序的运行和调试的快捷键F5和Ctrl-F5  
+"map <F9> :call CompileRun()<CR>  
+"map <F10> :call Run()<CR>
+"map <C-F10> :call Debug()<CR> 
+
+
+" pandoc 
+"set elvis_html=elvis.html
+func PandocConvertMdToHtml()  
+   "exec "!pandoc -t HTML5 --template=template-revealjs.html --mathml --standalone --section-divs   --variable theme=\"beige\"   --variable transition=\"linear\" % -o slides.html"
+   exec "!pandoc -t HTML5 --template=template-revealjs.html --mathml --standalone --section-divs   --variable theme=\"beige\"  % -o slides.html"
+   exec "!slides.html"
+endfunc  
+map <F10> :call PandocConvertMdToHtml()<CR>
+
+" find match line and copy to new file "将当前查找的所有匹配行导入到另一窗口
+nnoremap <silent>gp :let @p=@_<CR>:g/<C-R>//y P<CR>:new<CR>pdkyG

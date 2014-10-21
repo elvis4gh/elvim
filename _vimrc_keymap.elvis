@@ -1,0 +1,57 @@
+" file tab's switch  refer to c:\Program Files\Vim\_vimrc_keymap.elvis
+
+"
+source $VIM\_vimrc_keymap_F1_F12.elvis
+source $VIM\_vimrc_keymap_Meta.elvis
+source $VIM\_vimrc_keymap_Ctrl.elvis
+
+nnoremap <silent> <M-h> gT
+nnoremap <silent> <M-l> gt
+
+"Favorite file
+noremap <silent> <C-F> :open d:\confidential\Elvis\FavoriteFileList.txt<cr>
+nmap <silent> <C-F> :tabnew c:\Users\eknoqry\Documents\MyWiki\FavoriteFileList.wiki<CR>
+
+" 添加 wiki标题格式： =title= 
+noremap <silent> <C-j> I=<ESC>A=<ESC>
+noremap <silent> <C-k> diwi[[]]<ESC>hhp
+noremap <silent> <C-l> bi*<ESC>ea*<ESC>
+
+"设置F12为用firefox打开当前文件的快捷键。
+"另外，:Sex命令可以打开文件管理器，用”x“就可以运行光标所在的文件，也可以实现此功能（firefox为默认浏览器的情况下）。
+"在NERDTree中，用“！”可以运行文件，但是会出现一个dos提示窗口，需手动关闭。
+map <F12> :!start c:\progra~1\Mozill~1\firefox.exe "%:p"<CR>
+
+"如果是IE，命令为：
+":!start c:\progra~1\intern~1\iexplore.exe %:p
+"因为firefox.exe对空格敏感，会认为是打开多个文件，所以要加引号，而IE加不加都行。
+
+" kep map 
+"noremap <silent> <C-n> :tabnew tmp.txt<CR> 
+
+"vnoremap <C-b> di**<ESC>hp
+
+"font
+"set guifont=Monospace\ 12
+"
+noremap <silent> <M-8> :call libcallnr("vimtweak.dll", "SetAlpha", 200)<CR>
+noremap <silent> <M-9> :call libcallnr("vimtweak.dll", "SetAlpha", 235)<CR>:call libcallnr("vimtweak.dll", "EnableTopMost", 1)<CR>
+noremap <silent> <M-0> :call libcallnr("vimtweak.dll", "SetAlpha", 255)<CR>:call libcallnr("vimtweak.dll", "EnableTopMost", 0)<CR>
+noremap <silent> <M-q> :call libcallnr("vimtweak.dll", "SetAlpha", 255)<CR>:call libcallnr("vimtweak.dll", "EnableTopMost", 0)<CR>
+
+""""""""""""""""""""""""""""""""""""""""
+"   <F1> ~ <F12>
+"
+""""""""""""""""""""""""""""""""""""""""
+
+"nmap <leader>image yy:!c:\Users\eknoqry\software\IrfanViewPortable\IrfanViewPortable.exe ""p<CR> 
+nmap <leader>image yy:!rundll32.exe C:\WINDOWS\system32\shimgvw.dll,ImageView_Fullscreen ""p<CR>
+nmap <silent> <leader>tl :TlistToggle<CR> 
+nmap <silent> <leader>few :FirstExplorerWindow<cr>
+nmap <silent> <leader>bew :BottomExplorerWindow<cr>
+nmap <silent> <leader>wm :WMToggle<cr>
+
+nmap <silent> <F6> :QFix<CR>
+nmap <silent> <F7>  <Plug>ToggleProject
+"}}}
+

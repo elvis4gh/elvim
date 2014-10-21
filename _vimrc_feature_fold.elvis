@@ -1,0 +1,30 @@
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Folding
+" set foldmethod=manual.然后zm，zM，zr，zR来控制折展。当然也可以使用indent方法 了，不过manual一般来说更实用点。 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"Enable folding, I find it very useful
+set fen
+"fold method 
+set fdm=manual
+autocmd FileType c         set fdm=indent
+autocmd FileType cpp       set fdm=indent
+autocmd FileType elvis     set fdm=indent
+autocmd FileType java      set fdm=indent
+autocmd FileType local     set fdm=marker
+autocmd FileType xml       set fdm=indent
+autocmd FileType wiki      set fdm=indent
+" markdown file
+"autocmd FileType md        set fdm=indent
+
+"set fdm=syntax
+
+" fold level
+set fdl=2
+autocmd FileType elvis     set fdl=0
+autocmd FileType local     set fdl=0
+autocmd FileType xml       set fdl=2
+autocmd FileType wiki      set fdl=0
+"autocmd FileType md        set fdl=0
+
+                  nnoremap <silent> <leader>f :set fdm=indent<CR>
+                  nnoremap <silent> <leader>F :set fdm=manual<CR>

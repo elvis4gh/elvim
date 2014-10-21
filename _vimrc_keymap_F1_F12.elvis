@@ -1,0 +1,40 @@
+""""""""""""""""""""""""""""""""""""""""
+"   <F1> ~ <F12>
+"
+""""""""""""""""""""""""""""""""""""""""
+"---------<F1>--------- 
+"---------<F2>--------- 
+"bind F2 to 'set number!' which toggles on/off.
+map <silent> <F2> :set number!<CR>
+"---------<F3>--------- 
+"nmap <silent> <F3> :command<CR>
+noremap <silent> <F3> :cp<CR>
+"---------<F4>--------- 
+noremap <silent> <F4> :cn<CR>
+"---------<F5>--------- 
+"---------<F6>--------- 
+nmap <silent> <F6> :QFix<CR>
+"---------<F7>--------- 
+"---------<F8>--------- 
+"---------<F9>--------- 
+"---------<F10>--------- 
+"---------<F11>--------- 
+"one key compile 一键编译
+map <silent> <F11> :!start /use/bin/g++ "%:p"<CR>
+
+"==Colorscheme== "==let's switch backgrounds pretty quickly ==
+map <F11> :let &background = ( &background == "light"? "sorcerer" : "light" )<CR>
+
+"
+"---------<F12>--------- "Toggle Menu and Toolbar
+set guioptions-=m
+set guioptions-=T
+map <silent> <F12> :if &guioptions =~# 'T' <Bar>
+                       \set guioptions-=T <Bar>
+                       \set guioptions-=m <bar>
+                   \else <Bar>
+                       \set guioptions+=T <Bar>
+                       \set guioptions+=m <Bar>
+                   \endif<CR>
+
+

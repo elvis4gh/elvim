@@ -1,0 +1,6 @@
+
+"win manager plugin
+let g:winManagerWindowLayout='FileExplorer|BufExplorer'  "è¿éå¯ä»¥è®¾ç½®ä¸ºå¤ä¸ªçªå£, å¦'FileExplorer|BufExplorer|TagList'
+let g:persistentBehaviour=0             "åªå©ä¸ä¸ªçªå£æ¶, éåºvim.
+let g:winManagerWidth=20
+let g:defaultExplorer=1

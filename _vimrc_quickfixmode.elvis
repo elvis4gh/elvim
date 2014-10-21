@@ -1,0 +1,42 @@
+""""""""""""""""""""""""""""
+"
+"  Quickfix mode: 
+"
+""""""""""""""""""""""""""""
+
+
+" make "{{{
+":make command default setting "use make command to compile current buffer file
+"   if has('unix') || exists('$mingw') 
+set  makeprg=gcc-4\ -g\ -std=c99\ -o\ %<\ % 
+"autocmd FileType c       comp gcc-4 | setl  makeprg=gcc-4\ -g\ -std=c99\ -Wall\ -Wextra\ -Wunreachable-code\ -o\ %<\ % 
+"autocmd FileType cpp     comp gcc-4 | setl  makeprg=g++-4\ -g\ -Wall\ -Wextra\ -Wunreachable-code\ -o\ %<\ %
+autocmd FileType c,cpp  map <buffer> <leader><space> :w<CR>:make<CR>
+
+"}}}
+
+noremap <silent> <F3> :cn<CR>
+noremap <silent> <F4> :cp<CR>
+noremap <silent> <leader>cn :cn<cr>
+noremap <silent> <leader>cp :cp<cr>
+nnoremap <silent> <leader>n :cnext<CR>
+nnoremap <silent> <leader>N :cprevious<CR>
+
+noremap <silent> <leader>cw :cw 10<cr> 
+ 
+
+" Toggle Quickfix window    "{{{
+"command -bang -nargs=? QFix call QFixToggle(<bang>0)
+
+function! QFixToggle(forced) "{{{
+  if exists("g:qfix_win") && a:forced == 0
+    cclose
+    unlet g:qfix_win
+  else
+    copen 10
+    let g:qfix_win = bufnr("$")
+  endif
+endfunction "}}}
+
+nmap <silent> <F6> :QFix<CR>
+"}}}

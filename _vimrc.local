@@ -1,0 +1,603 @@
+source $VIMRUNTIME/vimrc_example.vim
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" download from http://www.cnblogs.com/whjiang/archive/2007/06/08/776776.html
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"VIM help tips:
+":help cmd    find normal mode command
+":help i_cmd    find insert mode command
+":help :cmd     find command-line command
+":help  'option     find the option help
+":set   option?     get the current value for the option
+" Sections:
+" ----------------------
+" *> General
+" *> Colors and Font
+" *> Fileformat
+" *> VIM userinterface
+" ------ *> Statusline
+" *> Moving around and tab
+" *> General Autocommand
+" *> Parenthesis/bracket expanding
+" *> General Abbrev
+" *> Command-line config
+" *> Buffer realted
+" *> Files and backup
+" *> Text option
+" ------ *> Indent
+" *> Spell checking
+" *> Plugin configuration
+" ------ *> Yank ring
+" ------ *> File explorer
+" ------ *> Minibuffer
+" ------ *> Tag list (ctags) - not used
+" ------ *> LaTeX Suite thing
+" *> Filetype generic
+" ------ *> Todo
+" ------ *> VIM
+" ------ *> HTML related
+" ------ *> Ruby & PHP section
+" ------ *> Python section
+" ------ *> Cheetah section
+" ------ *> Java section
+" ------ *> JavaScript section
+" ------ *> C mapping
+" ------ *> SML
+" ------ *> Scheme binding
+" *> Snippet
+" ------ *> Python
+" ------ *> javaScript
+" *> Cope
+" *> MISC
+"
+" Tip:
+" If you find anything that you can't understand than do this:
+" help keyword OR helpgrep keyword
+" Example:
+" Go into command-line mode and type helpgrep nocompatible, ie.
+" :helpgrep nocompatible
+" then press <leader>c to see the results, or :botright cw
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => General
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set nocompatible "Get out of VI's compatible mode..
+source $VIMRUNTIME/mswin.vim "Use Windows convension keys (C-c,C-x, etc)
+:behave mswin
+
+
+set history=100 "Sets how many lines of history VIM har to remember
+set viminfo='20,<50,s10,h
+set autoread "Set to auto read when a file is changed from the outside
+set mouse=a "Have the mouse enabled all the time:
+set mousemodel=popup " Use extend mouse mode to search word using SHIFT+left-mouse
+let mapleader = "," "Set mapleader 自定义快捷键的开头
+let g:mapleader = ","
+" leader key map 
+" 快速打开帮助
+noremap <silent> <leader>h :h <C-r><C-w><cr>   
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Colors and Font
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+syntax on "Enable syntax hl
+
+
+
+"if you use vim in tty,
+"'uxterm -cjk' or putty with option 'Treat CJK ambiguous characters as wide' on
+" 全角 / 半角
+if has("ambiwidth")
+    set ambiwidth=double
+endif
+
+" => Fileformat
+set fileformats=unix,dos "Favorite filetype
+nmap <leader>fd :se ff=dos<cr>
+nmap <leader>fu :se ff=unix<cr>
+let g:explHideFiles='^\.,\.com$,\.doc$,\.pdf$,\.dvi$,\.gz$,\.exe$,\.zip$ \.ps$,\.ppt$'
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => VIM userinterface
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 显示界面
+if has("gui_running")
+    "set guioptions-=l
+    colorscheme sorcerer
+    if has("autocmd")
+       au GUIEnter * simalt ~x "start gvim maximized
+       "autocmd GUIEnter * winpos 500 500
+    endif
+    if has("cursorline")
+        set cursorline
+        "hi cursorline guibg=#333333
+        "hi CursorColumn guibg=#333333
+    endif
+endif
+set scrolloff=7 "Set 7 lines to the curors - when moving vertical..
+set wildmenu    "Turn on WiLd menu  menu的tab键自动保全功能
+set ruler       "Always show current position
+set cmdheight=2 "The commandbar is 2 high
+set number      "Show line number
+set lazyredraw  "Do not redraw, when running macros.. lazyredraw
+set hidden      "Change buffer - without saving
+set backspace=indent,eol,start "Set backspace
+set whichwrap+=<,>,h,l "backspace and cursor keys wrap to
+" => 自定义tab label 
+set guitablabel=%t\ %M "tab labels show the filename without path(tail) (see :help statusline for options)
+set laststatus=2      "Always hide the statusline
+" => 自定义状态栏Statusline "Format the statusline
+set statusline=
+set statusline+=%f "path to the file in the buffer, relative to current directory
+set statusline+=\ %h%1*%m%r%w%0* " flag
+set statusline+=\ [%{strlen(&ft)?&ft:'none'}, " filetype
+set statusline+=%{&encoding},                 " encoding
+set statusline+=%{&fileformat}]               " file format
+set statusline+=\ %r%{CurDir()}%h
+set statusline+=\ (%l,%c)
+
+" Searching - 
+set ignorecase  " Searching - Ignore case when searching
+set incsearch   " Searching - 自动实时定位
+set magic       " Set magic on          FIXME 
+set hlsearch    "Highlight search thing
+"change the highlight bg color
+hi Search guibg=LightGreen 
+"hi Search guibg=LightBlue" is only for the GUI version of Vim. If you're "using Vim in-console, try:
+"hi Search ctermbg=LightBlue
+
+"No sound on errors.
+set noerrorbells
+set visualbell	" when error, flash as visual bell 
+
+"show matching bracet
+set showmatch
+set matchtime=5	" show matching time 
+set mat=4       "How many tenths of a second to blink
+
+"Set tab stop
+set tabstop=3	    " 实际的 tab 即为 4 个空格, tabstop = 4 is better for c programming
+set shiftwidth=3   "设置自动缩进 4 个空格, 当然要设自动缩进先.
+set softtabstop=3  "即设置 softtabstop 为 4. 输入 tab 后就跳了 4 格.
+set expandtab      "在输入 tab 后, vim 用恰当的空格来填充这个 tab.
+set whichwrap=b,s,<,>,[,]
+set formatoptions=tcrqmB
+set splitbelow
+set nostartofline
+set showcmd         " show (partial) command in status line
+set showmode	" show editor mode, such as command, insert or replace, visual as messa 
+set confirm		" with dialog support confirm({msg} [, {choices} [, {default} [, {type}]]])
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Moving around and tab page
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"vmap    <Tab>         ^0   >
+"vmap    <S-Tab>     ^0   <
+
+if has("usetab")
+    set switchbuf=usetab
+endif
+
+if has("stal")
+    set showtabline=2
+endif
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => General Autocommand
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" To automatically cd to the directory of current open file
+autocmd BufEnter * cd %:p:h
+autocmd BufNewFile *.cpp 0r ~/.vim/skeleton/skeleton.cpp
+autocmd BufNewFile *.h 0r ~/.vim/skeleton/skeleton.h
+autocmd BufNewFile,BufRead *.xsl     map <F6> <ESC>:call XslTags()<CR><CR><CR>
+autocmd FileType c,cpp,java set cindent
+autocmd FileType text setlocal textwidth=80	"For text mode, set textwidth =78 such as write email
+autocmd FileType plugin indent on	"For all plugin filetype let indent on
+autocmd FileType ftplugin indent on	"For all filetype plugin let indent on
+function! XslTags()
+    grep ":template .*$" %
+    copen 23
+endfunction
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Parenthesis/bracket expanding
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"Map auto complete of (, ", ', [
+"http://www.vim.org/tips/tip.php?tip_id=153
+"
+"ino ( ()<esc>:let leavechar=")"<cr>i
+"ino { {}<esc>:let leavechar="}"<cr>i
+"ino $q ''<esc>:let leavechar="'"<cr>i
+"ino $w ""<esc>:let leavechar='"'<cr>i
+"imap <c-l> <esc>:exec "normal f" . leavechar<cr>a
+
+
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Command-line config
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+func! Cwd()
+    let cwd = getcwd()
+    return "e " . cwd
+endfunc
+
+func! DeleteTillSlash()
+    let g:cmd = getcmdline()
+    if MySys() == "linux" || MySys() == "mac"
+        let g:cmd_edited = substitute(g:cmd, "\(.*[/]\).*", "\1", "")
+    else
+        let g:cmd_edited = substitute(g:cmd, "\(.*[\\]\).*", "\1", "")
+    endif
+    if g:cmd == g:cmd_edited
+        if MySys() == "linux" || MySys() == "mac"
+            let g:cmd_edited = substitute(g:cmd, "\(.*[/]\).*/", "\1", "")
+        else
+            let g:cmd_edited = substitute(g:cmd, "\(.*[\\]\).*[\\]", "\1", "")
+        endif
+    endif
+    return g:cmd_edited
+endfunc
+
+func! CurrentFileDir(cmd)
+    return a:cmd . " " . expand("%:p:h") . "/"
+endfunc
+
+"cno $q <C->eDeleteTillSlash()<cr>
+"cno $c e <C->eCurrentFileDir("e")<cr>
+"cno $tc <C->eCurrentFileDir("tabnew")<cr>
+cno $th tabnew ~/
+cno $td tabnew ~/Desktop/
+
+"Bash like
+cno <C-A> <Home>
+cno <C-E> <End>
+cno <C-K> <C-U>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Buffer realted
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"Open a dummy buffer for paste
+map <leader>q :e ~/buffer<cr>
+
+" Buffer - reverse everything ... :)
+map <F9> ggVGg?
+
+" Don't close window, when deleting a buffer
+command! Bclose call <SID>BufcloseCloseIt()
+
+function! <SID>BufcloseCloseIt()
+    let l:currentBufNum = bufnr("%")
+    let l:alternateBufNum = bufnr("#")
+
+    if buflisted(l:alternateBufNum)
+        buffer #
+    else
+        bnext
+    endif
+
+    if bufnr("%") == l:currentBufNum
+        new
+    endif
+
+    if buflisted(l:currentBufNum)
+        execute "bdelete! ".l:currentBufNum
+    endif
+endfunction
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Files and backup
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"Turn backup off
+set nobackup
+set nowb
+"set noswapfile
+set noar
+
+""""""""""""""""""""""""""""""
+" => Indent
+""""""""""""""""""""""""""""""
+set autoindent
+set smartindent
+"C-style indenting
+set cindent
+set cino=:0g0t0(sus  " values control how cindent indent code
+set wrap
+"set nowrap
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Plugin configuration
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"WindowZ
+map <c-w><c-t> :WMToggle<cr>
+
+let g:bufExplorerSortBy = "name"
+
+""""""""""""""""""""""""""""""
+" => CTags
+""""""""""""""""""""""""""""""
+:set tags=tags;,TAGS;,/usr/include/tags
+
+
+""""""""""""""""""""""""""""""
+" => Sketch
+""""""""""""""""""""""""""""""
+"command -nargs=0 ToggleSketch call ToggleSketch()
+
+""""""""""""""""""""""""""""""
+" =>  WinManager
+""""""""""""""""""""""""""""""
+let g:winManarWindowLayout = "FileExplorer"
+map <c-w><c-f> :FirstExplorerWindow<cr>
+map <c-w><c-b> :BottomExplorerWindow<cr>
+
+""""""""""""""""""""""""""""""
+" =>  latexSuite
+""""""""""""""""""""""""""""""
+filetype plugin on
+set grepprg=grep\ -nH\ $*
+let g:Tex_CompileRule_dvi
+    \="latex -src-specials -interaction=nonstopmode $*"
+let g:Tex_ViewRule_dvi
+    \="xdvi -editor 'gvim --servername latex-suite --remote-silent'"
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => MISC
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"Remove the Windows ^M
+"we use the mark.vim, it takes the keymap ,m
+"noremap <Leader>m :%s/\r//g<CR>
+
+"Paste toggle - when pasting something in, don't indent.
+"set pastetoggle=<F3>
+
+"Remove indenting on empty line
+map <F2> :%s/s*$//g<cr>:noh<cr>''
+
+" Always print line number
+set printoptions=number:y
+
+set mousehide " Hide the mouse pointer while typing
+set autochdir
+set browsedir=buffer " set default browse dir
+
+" vimdiff : use a large window
+if &diff
+    se co=160
+endif
+    
+
+function! TimeStamp()
+    let curposn= SaveWinPosn()
+    %s/\$Date: .*\$/\=strftime("$Date: %Y-%m-%d %H:%M:%S$")/ge
+    %s/Last Change: .*$/\=strftime("Last Change: %Y-%m-%d %H:%M:%S")/ge
+    %s/Last Modified: .*$/\=strftime("Last Modified: %Y-%m-%d %H:%M:%S")/ge
+    call RestoreWinPosn(curposn)
+endfunction
+
+
+function! AutoTimeStamp()
+    augr tagdate
+    au!
+    au BufWritePre,FileWritePre * call TimeStamp()
+    augr END
+endfunction
+" call AutoTimeStamp()
+
+function! NoAutoTimeStamp()
+    augr tagdate
+    au!
+    augr END
+endfunction
+
+" my functions
+:function! BreakPoint()
+	:let gdbinit = "$HOME/.gdbinit"
+	:let setting = readfile(gdbinit)
+	:let currentline = line(".")
+	:let fname = bufname("%")
+	:let breakcmd = printf("break	%s:%s", fname, currentline)
+	:let newbreak = [breakcmd]
+	:let setting += newbreak
+	:let setting += [''] " add a new line at EOF
+	:echo "break point : "
+	:echo breakcmd
+	:call writefile(setting, gdbinit) 
+:endfunction
+
+
+
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" add the http://blog.csdn.net/easwy/archive/2007/02/26/1514639.aspx
+" 
+"
+"
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Switch to buffer according to file name
+function! SwitchToBuf(filename)
+    let fullfn = substitute(a:filename, "^\\~/", $HOME . "/", "")
+    " find in current tab
+    let bufwinnr = bufwinnr(fullfn)
+    if bufwinnr != -1
+        exec bufwinnr . "wincmd w"
+        return
+    else
+        " find in each tab
+        tabfirst
+        let tab = 1
+        while tab <= tabpagenr("$")
+            let bufwinnr = bufwinnr(fullfn)
+            if bufwinnr != -1
+                exec "normal " . tab . "gt"
+                exec bufwinnr . "wincmd w"
+                return
+            endif
+            tabnext
+            let tab = tab + 1
+        endwhile
+        " not exist, new tab
+        exec "tabnew " . fullfn
+    endif
+endfunction
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" use the mark.vim keymap
+" mark setting
+""""""""""""""""""""""""""""""
+   nmap <silent> <leader>hl <Plug>MarkSet
+   vmap <silent> <leader>hl <Plug>MarkSet
+   nmap <silent> <leader>hh <Plug>MarkClear
+   vmap <silent> <leader>hh <Plug>MarkClear
+   nmap <silent> <leader>hr <Plug>MarkRegex
+   vmap <silent> <leader>hr <Plug>MarkRegex
+
+    "set shell=c:\cygwin\bin\sh " not install cygwin now, so can't set shell to bash
+
+
+autocmd FileType elvis set fdm=marker 
+
+
+"OS value. return win32 linux or mac "{{{
+function! MySys()
+    return "windows" 
+   " return "linux"
+   " return "mac"
+endfunction
+"}}}
+
+"Fast edit vimrc
+if MySys() == 'linux'
+    set shell=bash "Set shell to be bash
+    "Fast reloading of the .vimrc
+    map <silent> <leader>s :source ~/.vimrc<cr>
+    "Fast editing of .vimrc
+    map <silent> <leader>e :call SwitchToBuf("~/.vimrc")<cr>
+    "When .vimrc is edited, reload it
+    autocmd! bufwritepost .vimrc source ~/.vimrc
+elseif MySys() == 'windows'
+    "Fast reloading of the _vimrc
+    map <silent> <leader>s :source $VIM/_vimrc<cr>
+    "Fast editing of _vimrc
+    map <silent> <leader>e :call SwitchToBuf("$VIM/_vimrc")<cr>
+    "When _vimrc is edited, reload it
+    autocmd! bufwritepost _vimrc source $VIM/_vimrc
+
+   "internationalization "I only work in Win2k Chinese version
+    set encoding=utf-8
+    set fileencodings=utf-8,chinese,latin-1
+    if has("win32")
+       set fileencoding=chinese
+    else
+       set fileencoding=utf-8
+    endif
+
+    " Set fileencoding priority
+    if getfsize(expand("%")) > 0
+        set fileencodings=ucs-bom,utf-8,gb2312,gb18030,cp936,big5,euc-jp,euc-kr,latin1
+    else
+        set fileencodings=utf-8,gb2312,gb18030,cp936,big5,euc-jp,euc-kr,latin1
+    endif
+
+    
+elseif MySys() == 'mac'
+    set shell=bash "Set shell to be bash
+    nmap <D-j> <M-j>
+    nmap <D-k> <M-k>
+    vmap <D-j> <M-j>
+    vmap <D-k> <M-k>
+endif
+
+function! CurDir()
+    let curdir = substitute(getcwd(), '/home/eknoqry/', "~/", "g")
+    return curdir
+endfunction
+
+function! VisualSearch(direction) range
+    let l:saved_reg = @"
+    execute "normal! vgvy"
+    let l:pattern = escape(@", '\/.*$^~[]')
+    let l:pattern = substitute(l:pattern, " $", "", "")
+    if a:direction == 'b'
+        execute "normal ?" . l:pattern . "^M"
+    else
+        execute "normal /" . l:pattern . "^M"
+    endif
+    let @/ = l:pattern
+    let @" = l:saved_reg
+endfunction
+
+" 　让virsual mode 支持用 #　键来search ；　" From an idea by Michael Naumann
+"Basically you press * or # to search for the current selection !! Really useful
+vnoremap <silent> * :call VisualSearch('f')<CR>
+vnoremap <silent> # :call VisualSearch('b')<CR>
+vnoremap <Down> gj
+vnoremap <Up> gk
+vnoremap <End> g$
+vnoremap <Home> g0
+vnoremap $1 <esc>`>a)<esc>`<i(<esc>
+vnoremap $2 <esc>`>a]<esc>`<i[<esc>
+vnoremap $3 <esc>`>a}<esc>`<i{<esc>
+vnoremap $$ <esc>`>a"<esc>`<i"<esc>
+vnoremap $q <esc>`>a'<esc>`<i'<esc>
+vnoremap $w <esc>`>a"<esc>`<i"<esc>
+
+
+nnoremap <Down> gj
+nnoremap <Up> gk
+nnoremap <End> g$
+nnoremap <Home> g0
+nnoremap <silent> <F6> :bn<CR> 
+nnoremap <silent> <S-F12> <ESC>:TlistSync<CR>
+nnoremap <silent> <C-F6> :BN<CR> 
+
+" Cursor movement
+inoremap <Down> <C-o>gj
+inoremap <Up> <C-o>gk
+inoremap <End> <C-o>g$
+inoremap <Home> <C-o>g0
+inoremap <silent> <F6> <ESC>:bn<CR>
+inoremap <silent> <C-F6> <ESC>:BN<CR>
+"快速移动到句首和句末 Moving fast to front, back and 2 sides ;)
+inoremap <silent> <m-$> <esc>$a
+inoremap <silent> <m-^> <esc>0i
+
+"Smart way to move btw. window
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+
+map <C-N>	<ESC>:cn<CR>
+map <C-P>	<ESC>:cp<CR>
+map <F4>	<ESC>:call BreakPoint()<CR>
+map <F5>    :WMToggle<cr>
+map <F7>	<ESC>:cd $CSRC/query<CR>:make xpath2cmd<CR>
+map <F12>	<ESC>:Tlist<CR>:TlistUpdate<CR><C-L>
+map <C-F12> <ESC>:!cd $CSRC; ctags -R --c++-kinds=+p --fields=+iaS include parse/include parse/esii query/xpath2ast query/include query/type query/xpath2run query/xpath2cc<CR>
+"Tab configuration
+map <leader>tn :tabnew %<cr>
+map <leader>tc :tabclose<cr>
+map <leader>tm :tabmove
+"Switch to current dir
+map <leader>cd :cd %:p:h<cr>
+map <silent> <leader>s :source $VIM/_vimrc<cr>
+"Actually, the tab does not switch buffers, but my arrow
+"Bclose function ca be found in "Buffer related" section
+map <silent> <leader>bd :Bclose<cr>
+
+" tab navigation (next tab or next buffer) with alt left / alt right
+map <silent> <A-Right> :tabnext<CR>
+map <silent> <A-Left>  :tabprevious<CR>
+"Move a line of text using control，调试的时候有用
+nmap <M-j> mz:m+<cr>`z
+nmap <M-k> mz:m-2<cr>`z
+vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
+vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z

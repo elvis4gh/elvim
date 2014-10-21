@@ -1,0 +1,26 @@
+"project plugin
+"切换打开和关闭project窗口
+nmap <silent> <Leader>P <Plug>ToggleProject
+let g:proj_window_width=20 
+let g:proj_window_increment=90 "当按空格键 <space> 或者单击鼠标左键 <LeftMouse >时项目窗口宽度增加量,默认值:100
+let g:proj_flags='i'    "当选择打开一个文件时会在命令行显示文件名和当前工作路径.
+let g:proj_flags='m'    "在常规模式下开启 |CTRL-W_o| 和 |CTRL-W_CTRL_O| 映射, 使得当前缓冲区成为唯一可见的缓冲区, 但是项目窗口仍然可见.
+let g:proj_flags='s'    "开启语法高亮.
+let g:proj_flags='t'    "用按 <space> 进行窗口加宽.
+let g:proj_flags='c'    "设置后, 在项目窗口中打开文件后会自动关闭项目窗口.
+"let g:proj_flags='F'   //显示浮动项目窗口. 关闭窗口的自动调整大小和窗口替换.
+let g:proj_flags='L'    "自动根据CD设置切换目录.
+"let g:proj_flags='n'    "显示行号.
+let g:proj_flags='S'    "启用排序.
+let g:proj_flags='T'    "子项目的折叠在更新时会紧跟在当前折叠下方显示(而不是其底部).
+let g:proj_flags='v'    "设置后将, 按 /G 搜索时用 :vimgrep 取代 :grep.
+"let g:proj_run1='!p4 edit %f'    //g:proj_run1 ...  g:proj_run9 用法.
+let g:proj_run3='silent !gvim %f'
+
+
+"global search - search the word in global 
+map  <silent> <leader>gsa yiw:Project<CR><C-w>h/aec_all<CR>\G<C-r>"<CR><Plug>ToggleProject
+map  <silent> <leader>gsc yiw:Project<CR><C-w>h/cpp_flag<CR>\G<C-r>"<CR><Plug>ToggleProject
+map  <silent> <leader>gss yiw:Project<CR><C-w>h/smp_flag<CR>\G<C-r>"<CR><Plug>ToggleProject
+map  <silent> <leader>gsr yiw:Project<CR><C-w>h/rcp_flag<CR>\G<C-r>"<CR><Plug>ToggleProject
+

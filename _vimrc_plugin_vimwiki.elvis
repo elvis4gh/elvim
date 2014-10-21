@@ -1,0 +1,82 @@
+" vimwiki
+"let g:vimwiki_use_mouse = 1
+"let g:vimwiki_list = [{'path': 'c:\Users\eknoqry\Documents\MyWiki\',
+"\ 'path_html': 'c:\Users\eknoqry\Documents\MyWiki\html\',
+"\ 'html_header': 'c:\Users\eknoqry\Documents\MyWiki\template\header.tpl',
+"\ 'diary_link_count': 5}, 
+"\ {'path': 'c:\Users\eknoqry\Documents\MyWiki\MasterEnglishWiki\',
+"\ 'path_html': 'c:\Users\eknoqry\Documents\MyWiki\MasterEnglishWiki\html\',
+"\ 'html_header': 'c:\Users\eknoqry\Documents\MyWiki\template\header.tpl',
+"\ 'diary_link_count': 5},
+"\ {'path': 'c:\Users\eknoqry\Documents\MyWiki\PoliticsWiki\',j,
+"\ 'diary_link_count': 5},
+"\ {'path': 'c:\Users\eknoqry\Documents\MyWiki\MbaWiki\',
+"\ 'path_html': 'c:\Users\eknoqry\Documents\MyWiki\PoliticsWiki\html\',
+"\ 'html_header': 'c:\Users\eknoqry\Documents\MyWiki\template\header.tpl',
+"\ 'diary_link_count': 5},
+"\ {'path': 'c:\Users\eknoqry\Documents\MyWiki\PhysicsWiki\',
+"\ 'path_html': 'c:\Users\eknoqry\Documents\MyWiki\PhysicsWiki\html\',
+"\ 'html_header': 'c:\Users\eknoqry\Documents\MyWiki\template\header.tpl',
+"\ 'diary_link_count': 5}] 
+
+" vimwiki
+let g:vimwiki_use_mouse = 1
+let g:vimwiki_list = [{'path': '~\Dropbox\wiki\',
+\ 'path_html': '~\Dropbox\wiki\html\',
+\ 'template_path': '~\Dropbox\markdown\elvis_github_page\wiki\templates',
+\ 'template_default': 'gh_wiki_tpl',
+\ 'template_ext': '.html',
+\ 'diary_link_count': 5}, 
+\ {'path': '~\Dropbox\wiki\MasterEnglishWiki\',
+\ 'path_html': '~\Dropbox\wiki\MasterEnglishWiki\html\',
+\ 'html_header': '~\Dropbox\wiki\template\header.tpl',
+\ 'diary_link_count': 5},
+\ {'path': '~\Dropbox\wiki\PoliticsWiki\',
+\ 'path_html': '~\Dropbox\wiki\PoliticsWiki\html\',
+\ 'html_header': '~\Dropbox\wiki\template\header.tpl',
+\ 'diary_link_count': 5},
+\ {'path': '~\Dropbox\wiki\MbaWiki\',
+\ 'path_html': '~\Dropbox\wiki\PoliticsWiki\html\',
+\ 'html_header': '~\Dropbox\wiki\template\header.tpl',
+\ 'diary_link_count': 5},
+\ {'path': '~\Dropbox\wiki\PhysicsWiki\',
+\ 'path_html': '~\Dropbox\wiki\PhysicsWiki\html\',
+\ 'html_header': '~\Dropbox\wiki\template\header.tpl',
+\ 'diary_link_count': 5},
+\ {'path': '~\Dropbox\markdown\elvis_github_page\wiki',
+\ 'path_html': '~\Dropbox\markdown\elvis_github_page\wiki\html\',
+\ 'template_path': '~\Dropbox\markdown\elvis_github_page\wiki\templates',
+\ 'template_default': 'gh_wiki_tpl',
+\ 'template_ext': '.html'}] 
+
+
+" help vimwiki
+"let g:vimwiki_camel_case = 1 "¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿
+" let g:vimwiki_menu = ''   " vimwiki menu
+let g:vimwiki_CJK_length = 1
+
+
+" add for markdown
+let g:vimwiki_ext2syntax = {'.md':'markdown','.markdown':'markdown','.mdown':'markdown','.mkd':'markdown'}
+    
+function! ToHtml()
+	exec 'w'
+	" dont' work: exec \"!pandoc  -s -S --self-contained -c style.css % -o %<.html "
+	exec "!pandoc -c style.css % -o %<.html "
+endfunction
+
+function! ToPdf()
+	exec 'w'
+	exec "!pandoc  % -o %<.pdf --latex-engine=xelatex --template=pm-template.latex"
+endfunction
+
+nmap <silent> <Leader>2h :call ToHtml()<CR>
+nmap <silent> <Leader>2p :call ToPdf()<CR>
+
+
+
+
+
+
+
+

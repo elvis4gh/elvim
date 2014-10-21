@@ -1,0 +1,7 @@
+" store vim abbreviate here
+"
+"e.g
+"abbreviate ad advantage
+
+"abbr pd     printf(" `<...>` = %d \n", `<...>`); fflush(NULL);
+"abbr printf printf(" `<...>` = %d \n", `<...>`); fflush(NULL);
